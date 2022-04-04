@@ -58,7 +58,7 @@ lint:
   script:
     - pwd
     - virtualenv -p ${MAIN_PYTHON_PKG} venv && . venv/bin/activate && make prepare && make develop extras=[all] packages=htcondor
-    - curl -sS https://bootstrap.pypa.io/get-pip.py | ${MAIN_PYTHON_PKG} #update pip to latest for reason
+    #- curl -sS https://bootstrap.pypa.io/get-pip.py | ${MAIN_PYTHON_PKG} #update pip to latest for reason
     - make mypy
     - make docs
     # - make diff_pydocstyle_report
@@ -69,7 +69,7 @@ cwl_dependency_is_stand_alone:
   script:
     - pwd
     - virtualenv -p ${MAIN_PYTHON_PKG} venv && . venv/bin/activate && make prepare && make develop extras=[cwl]
-    - curl -sS https://bootstrap.pypa.io/get-pip.py | ${MAIN_PYTHON_PKG} #update pip to latest for reason
+    #- curl -sS https://bootstrap.pypa.io/get-pip.py | ${MAIN_PYTHON_PKG} #update pip to latest for reason
     - make test tests=src/toil/test/docs/scriptsTest.py::ToilDocumentationTest::testCwlexample
 
 
@@ -78,7 +78,7 @@ wdl_dependency_is_stand_alone:
   script:
     - pwd
     - virtualenv -p ${MAIN_PYTHON_PKG} venv && . venv/bin/activate && make prepare && make develop extras=[wdl]
-    - curl -sS https://bootstrap.pypa.io/get-pip.py | ${MAIN_PYTHON_PKG} #update pip to latest for reason
+    #- curl -sS https://bootstrap.pypa.io/get-pip.py | ${MAIN_PYTHON_PKG} #update pip to latest for reason
     - make test tests=src/toil/test/wdl/toilwdlTest.py::ToilWdlIntegrationTest::testMD5sum
 
 quick_test_offline:
