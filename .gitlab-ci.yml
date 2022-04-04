@@ -37,6 +37,8 @@ before_script:
   - sudo add-apt-repository -y ppa:deadsnakes/ppa
   - sudo apt-get update
   - sudo apt-get install -y tzdata jq python3.7 python3.7-dev python3.8 python3.8-dev python3.9 python3.9-dev python3.9-distutils python3.10 python3.10-dev python3.10-distutils #python3.10-venv
+  - sudo apt-get update
+  - sudo apt-get upgrade
 after_script:
   # We need to clean up any files that Toil may have made via Docker that
   # aren't deletable by the Gitlab user. If we don't do this, Gitlab will try
@@ -57,8 +59,7 @@ lint:
   stage: linting_and_dependencies
   script:
     - pwd
-    - virtualenv -p ${MAIN_PYTHON_PKG} venv && . venv/bin/activate && curl https://bootstrap.pypa.io/get-pip.py | ${MAIN_PYTHON_PKG} && make prepare && make develop extras=[all] packages=htcondor && pip install --upgrade pip
-    #- curl -sS https://bootstrap.pypa.io/get-pip.py | ${MAIN_PYTHON_PKG} #update pip to latest for reason
+    - virtualenv -p ${MAIN_PYTHON_PKG} venv && . venv/bin/activate && curl https://bootstrap.pypa.io/get-pip.py | ${MAIN_PYTHON_PKG} && make prepare && make develop extras=[all] packages=htcondor
     - make mypy
     - make docs
     # - make diff_pydocstyle_report
@@ -69,7 +70,6 @@ cwl_dependency_is_stand_alone:
   script:
     - pwd
     - virtualenv -p ${MAIN_PYTHON_PKG} venv && . venv/bin/activate && curl https://bootstrap.pypa.io/get-pip.py | ${MAIN_PYTHON_PKG} && make prepare && make develop extras=[cwl]
-    #- curl -sS https://bootstrap.pypa.io/get-pip.py | ${MAIN_PYTHON_PKG} #update pip to latest for reason
     - make test tests=src/toil/test/docs/scriptsTest.py::ToilDocumentationTest::testCwlexample
 
 
@@ -77,8 +77,7 @@ wdl_dependency_is_stand_alone:
   stage: linting_and_dependencies
   script:
     - pwd
-    - virtualenv -p ${MAIN_PYTHON_PKG} venv && . venv/bin/activate && curl https://bootstrap.pypa.io/get-pip.py | ${MAIN_PYTHON_PKG} &&  make prepare && make develop extras=[wdl] && pip install --upgrade pip
-    #- curl -sS https://bootstrap.pypa.io/get-pip.py | ${MAIN_PYTHON_PKG} #update pip to latest for reason
+    - virtualenv -p ${MAIN_PYTHON_PKG} venv && . venv/bin/activate && curl https://bootstrap.pypa.io/get-pip.py | ${MAIN_PYTHON_PKG} &&  make prepare && make develop extras=[wdl]
     - make test tests=src/toil/test/wdl/toilwdlTest.py::ToilWdlIntegrationTest::testMD5sum
 
 quick_test_offline:
