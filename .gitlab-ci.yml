@@ -86,6 +86,7 @@ quick_test_offline:
   script:
     - virtualenv -p ${MAIN_PYTHON_PKG} venv
     - . venv/bin/activate
+    - curl https://bootstrap.pypa.io/get-pip.py | ${MAIN_PYTHON_PKG}
     - pip install -U pip wheel
     - make prepare
     - make develop extras=[aws,google,wdl]
