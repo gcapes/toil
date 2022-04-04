@@ -57,7 +57,7 @@ lint:
   stage: linting_and_dependencies
   script:
     - pwd
-    - virtualenv -p ${MAIN_PYTHON_PKG} venv && . venv/bin/activate && make prepare && make develop extras=[all] packages=htcondor
+    - virtualenv -p ${MAIN_PYTHON_PKG} venv && . venv/bin/activate && make prepare && make develop extras=[all] packages=htcondor && pip install --upgrade pip
     #- curl -sS https://bootstrap.pypa.io/get-pip.py | ${MAIN_PYTHON_PKG} #update pip to latest for reason
     - make mypy
     - make docs
@@ -68,7 +68,7 @@ cwl_dependency_is_stand_alone:
   stage: linting_and_dependencies
   script:
     - pwd
-    - virtualenv -p ${MAIN_PYTHON_PKG} venv && . venv/bin/activate && make prepare && make develop extras=[cwl]
+    - virtualenv -p ${MAIN_PYTHON_PKG} venv && . venv/bin/activate && make prepare && make develop extras=[cwl] && pip install --upgrade pip
     #- curl -sS https://bootstrap.pypa.io/get-pip.py | ${MAIN_PYTHON_PKG} #update pip to latest for reason
     - make test tests=src/toil/test/docs/scriptsTest.py::ToilDocumentationTest::testCwlexample
 
@@ -77,7 +77,7 @@ wdl_dependency_is_stand_alone:
   stage: linting_and_dependencies
   script:
     - pwd
-    - virtualenv -p ${MAIN_PYTHON_PKG} venv && . venv/bin/activate && make prepare && make develop extras=[wdl]
+    - virtualenv -p ${MAIN_PYTHON_PKG} venv && . venv/bin/activate && make prepare && make develop extras=[wdl] && pip install --upgrade pip
     #- curl -sS https://bootstrap.pypa.io/get-pip.py | ${MAIN_PYTHON_PKG} #update pip to latest for reason
     - make test tests=src/toil/test/wdl/toilwdlTest.py::ToilWdlIntegrationTest::testMD5sum
 
