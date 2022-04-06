@@ -156,7 +156,15 @@ py310_main:
   stage: basic_tests
   script:
     - pwd
-    - virtualenv -p python3.10 venv && . venv/bin/activate && curl https://bootstrap.pypa.io/get-pip.py | python3.10 && pip install -U pip wheel && make prepare && make develop extras=[all] packages=htcondor
+    - sudo add-apt-repository ppa:deadsnakes/ppa
+    - sudo apt install python3.10
+    - git clone https://github.com/pypa/setuptools.git && cd setuptools && sudo python3.10 setup.py install
+    - sudo apt install python3.10-distutils
+    - curl -sS https://bootstrap.pypa.io/get-pip.py | python3.10
+    - sudo apt install python3.10-venv
+    - python3.10 -m venv
+    #virtualenv -p python3.10 venv &&
+    - . venv/bin/activate && curl https://bootstrap.pypa.io/get-pip.py | python3.10 && pip install -U pip wheel && make prepare && make develop extras=[all] packages=htcondor
     - make test tests=src/toil/test/src
     - make test tests=src/toil/test/utils
 
